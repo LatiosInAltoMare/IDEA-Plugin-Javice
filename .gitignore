@@ -1,0 +1,9 @@
+.gradle
+.idea
+.intellijPlatform
+.qodana
+build
+.vscode
+*.pyc
+__pycache__
+nohup.out

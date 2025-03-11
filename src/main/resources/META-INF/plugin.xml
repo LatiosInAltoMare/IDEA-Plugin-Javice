@@ -1,0 +1,41 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.github.latiosinaltomare.firstplugin</id>
+    <name>First_Plugin</name>
+    <vendor>latiosinaltomare</vendor>
+
+    <!-- 设置支持的 IntelliJ IDEA 版本范围 -->
+    <idea-version since-build="" until-build=""/>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java-capable</depends>
+
+    <resource-bundle>messages.MyBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Javice"
+                    anchor="right"
+                    factoryClass="com.github.latiosinaltomare.firstplugin.toolWindow.MyToolWindowFactory"
+                    canCloseContents="false"
+        />
+    </extensions>
+
+<!--    <extensions defaultExtensionNs="com.intellij">-->
+<!--        <toolWindow id="Javice_1"-->
+<!--                    anchor="bottom"-->
+<!--                    factoryClass="com.github.latiosinaltomare.firstplugin.inspection.MyCustomInspection"-->
+<!--                    canCloseContents="false"-->
+<!--        />-->
+<!--    </extensions>-->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <statusBarWidgetFactory implementation="com.github.latiosinaltomare.firstplugin.widget.MySimpleStatusBarWidgetFactory"
+                                id="Javice"/>
+    </extensions>
+
+    <applicationListeners>
+        <listener class="com.github.latiosinaltomare.firstplugin.listeners.MyApplicationActivationListener"
+                  topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+    </applicationListeners>
+
+</idea-plugin>
