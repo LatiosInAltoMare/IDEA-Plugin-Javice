@@ -2,7 +2,7 @@
 
 # Javice
 
-项目网址：https://github.com/LatiosInAltoMare/IDEA-Plugin-Javice)
+项目网址：https://github.com/LatiosInAltoMare/IDEA-Plugin-Javice
 
 <!-- Plugin description -->
 **Javice**（Intelligent Chat Assistant for **Jav**a No**vice** ）是由南科大计算机系SQLab实验室学生团队基于大语言模型的智能问答工具，面对南科大CS109课程学生开放，用于辅助学生的编程学习过程。该工具实现了集成于IntelliJ IDEA开发环境中的客户端交互界面，更方便学生在学习过程中使用。目前Javice支持调用两种大语言模型，包括 Deepseek-R1-671b 模型，以及 DeepSeek-R1-Llama 70b 蒸馏模型。该工具**免费**向课程学生开放且**更为稳定**，可以为学生提供高效且智能的学习辅助。
@@ -49,7 +49,7 @@
 #### 初次使用
 由于资源有限，目前该工具目前仅面向 2025 Spring CS109 课程中的同学。使用需要连接校园网，且在初次使用需要API key。
 
-- 访问API key后台管理界面 http://starrail.sqlab.cra.moe:5001/，点击 `Get Started`
+- 访问API key后台管理界面  http://starrail.sqlab.cra.moe:5001/ ，点击 `Get Started`
 
   <img src="./pictures/dashboard.png" alt="dashboard" style="zoom:50%;" />
 
