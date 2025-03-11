@@ -151,7 +151,7 @@
 
 ## 部署、测试细节
 
-如果你对于部署以及测试的细节感兴趣，请查看我们的[部署文档](https://github.com/LatiosInAltoMare/Javice/blob/main/deploy_scheme.md)。
+如果你对于部署以及测试的细节感兴趣，请查看我们的[部署文档](https://github.com/LatiosInAltoMare/IDEA-Plugin-Javice/blob/master/deploy_scheme.md)。
 
 ## 开源协议
 
