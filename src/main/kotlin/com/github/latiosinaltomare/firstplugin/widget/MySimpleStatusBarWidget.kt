@@ -56,7 +56,7 @@ class MySimpleStatusBarWidget(private val project: Project) : StatusBarWidget, S
     }
 
     override fun getTooltipText(): String {
-        return "输入密钥"
+        return "Input Key"
     }
 
     override fun getClickConsumer(): Consumer<MouseEvent>? {
@@ -75,7 +75,7 @@ class MySimpleStatusBarWidget(private val project: Project) : StatusBarWidget, S
             scrollPane.background=Color.DARK_GRAY
 
             // 创建一个 JLabel 用于显示额外的提示信息
-            val label = JLabel("请输入您的密钥：")
+            val label = JLabel("Please input your key")
 
             // 创建一个 JPanel 并将 JLabel 和 JScrollPane 添加到其中
             val panel = JPanel(BorderLayout())
@@ -86,7 +86,7 @@ class MySimpleStatusBarWidget(private val project: Project) : StatusBarWidget, S
             val option = JOptionPane.showConfirmDialog(
                 null,
                 panel,
-                "输入密钥",
+                "Input Key",
                 JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.PLAIN_MESSAGE
             )
@@ -99,9 +99,9 @@ class MySimpleStatusBarWidget(private val project: Project) : StatusBarWidget, S
                     val settings = MyPluginSettings.getInstance()
                     settings.myState.userInput = userInput // 存储用户输入
 
-                    JOptionPane.showMessageDialog(null, "密钥已保存！", "成功", JOptionPane.INFORMATION_MESSAGE)
+                    JOptionPane.showMessageDialog(null, "Key has been saved", "Success", JOptionPane.INFORMATION_MESSAGE)
                 } else {
-                    JOptionPane.showMessageDialog(null, "输入内容不能为空！", "错误", JOptionPane.ERROR_MESSAGE)
+                    JOptionPane.showMessageDialog(null, "Input can't be null", "Error", JOptionPane.ERROR_MESSAGE)
                 }
             }
 

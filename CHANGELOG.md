@@ -1,6 +1,6 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# First_Plugin Changelog
+# Javice Changelog
 
 ## [Unreleased]
 ### Added
