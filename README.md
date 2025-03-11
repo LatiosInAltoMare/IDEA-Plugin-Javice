@@ -1,0 +1,3 @@
+<!-- Plugin description -->
+Javice (Intelligent Chat Assistant for Java Novice) is an intelligent Q&A tool based on a large language model, developed by the SQLab student team of the Computer Science Department, SUSTech. It is designed for students enrolled in the CS109 course at SUSTech to assist in their programming learning process. The tool integrates a client interaction interface into the IntelliJ IDEA development environment, making it more convenient for students to use during their studies. Currently, Javice supports two large language models: Deepseek-R1-671b and DeepSeek-R1-Llama 70b distilled model. The tool is free for course students and is more stable, providing efficient and intelligent learning assistance.
+<!-- Plugin description end -->
