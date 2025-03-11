@@ -14,10 +14,10 @@ A `jar` file (short for Java Archive) is a file format used for packaging, distr
 
 ### Step 1: Download the `jar` Package
 
-- Download link: [https://github.com/LatiosInAltoMare/Javice/blob/main/Javice.jar](https://github.com/LatiosInAltoMare/Javice/blob/main/Javice.jar)
+- Download link: https://github.com/LatiosInAltoMare/IDEA-Plugin-Javice/blob/master/Javice-1.0.jar
 - Click the download button on the page
 
-![alt text](./pictures/E0E79EEF4C57A4E22C1962EB1D3A5BC1.png)
+<img src="./pictures/download.png" alt="image-20250311123752261" style="zoom:50%;" />
 
 ### Step 2: Install the `jar` Package
 
