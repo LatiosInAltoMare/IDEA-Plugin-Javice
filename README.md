@@ -17,7 +17,7 @@
 
 **步骤一：下载`jar`包**
 
-- 下载地址：https://github.com/LatiosInAltoMare/IDEA-Plugin-Javice/blob/master/Javice-1.0.jar
+- 下载地址：https://github.com/LatiosInAltoMare/IDEA-Plugin-Javice/releases/download/v1.0.0/Javice-1.0.jar
 
 - 进入页面后点击下载按钮
 
