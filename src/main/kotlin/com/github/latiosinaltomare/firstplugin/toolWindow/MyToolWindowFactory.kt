@@ -30,13 +30,9 @@ import com.intellij.openapi.project.ProjectManager
 import com.vladsch.flexmark.util.data.MutableDataSet
 import com.vladsch.flexmark.ext.tables.TablesExtension
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension
-
 import com.intellij.ui.jcef.JBCefApp
 import okhttp3.RequestBody.Companion.toRequestBody
-
 import java.io.IOException
-
-import java.util.concurrent.CountDownLatch
 
 
 class MyToolWindowFactory : ToolWindowFactory {
@@ -286,17 +282,17 @@ $userMessage
                 isGenerating = true
                 chatPanel.repaint()
                 // 创建临时框，表示生成中
-//                val temporaryPanel = addTemporaryMessage(chatPanel)
+                // val temporaryPanel = addTemporaryMessage(chatPanel)
                 addMessageToChatPanel(chatPanel, "Javice", "", isUser = false)
-                // 将调用 Ollama 的代码移到后台线程，避免阻塞 UI 线程
+                // 将调用 llama 的代码移到后台线程，避免阻塞 UI 线程
                 fullResponse = ""
                 ApplicationManager.getApplication().executeOnPooledThread {
                     getModelResponse(userMessage, sendButton) { chunk ->
                         SwingUtilities.invokeLater {
                             // 移除临时消息框
-//                            chatPanel.remove(temporaryPanel)
+                            // chatPanel.remove(temporaryPanel)
                             fullResponse += chunk.removePrefix("data: ")
-                            //处理换行符
+                            // 处理换行符
                             fullResponse = fullResponse.replace("[newline]", "\n\n")
                             fullResponse = fullResponse.replace("[h_newline]", "\n")
                             updateStreamMessagePanel(currentEditorMessagePanel, fullResponse)
@@ -324,8 +320,8 @@ $userMessage
 
             val client = OkHttpClient.Builder()
                 .connectTimeout(120, TimeUnit.SECONDS)  // 连接超时 60 秒
-                .readTimeout(120, TimeUnit.SECONDS)    // 读取超时 120 秒
-                .writeTimeout(120, TimeUnit.SECONDS)   // 写入超时 120 秒
+                .readTimeout(120, TimeUnit.SECONDS)     // 读取超时 120 秒
+                .writeTimeout(120, TimeUnit.SECONDS)    // 写入超时 120 秒
                 .build()
 
             client.newCall(request).enqueue(object : Callback {
