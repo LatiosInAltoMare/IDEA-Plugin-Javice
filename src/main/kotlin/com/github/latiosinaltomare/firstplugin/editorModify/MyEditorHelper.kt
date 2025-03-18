@@ -19,14 +19,14 @@ import javax.swing.JPanel
 
 class MyEditorHelper(private val project: Project) {
 
-    //获取当前活动的编辑器
+    // 获取当前活动的编辑器
     fun getCurrentEditor(project: Project): Editor?{
         val fileEditorManager=FileEditorManager.getInstance(project)
         val selectedEditor=fileEditorManager.selectedTextEditor
         return selectedEditor
     }
 
-    //在编辑器中插入文本
+    // 在编辑器中插入文本
     fun insertTextToEditor(editor: Editor, offset: Int, text: String){
         val document=editor.document
         WriteCommandAction.runWriteCommandAction(project){
@@ -40,13 +40,12 @@ class MyEditorHelper(private val project: Project) {
 
         println("插入提示！")
         val inlayModel: InlayModel =editor.inlayModel
-        //设置灰色的字体属性
+        // 设置灰色的字体属性
         val textAttributes= TextAttributes()
         textAttributes.foregroundColor= Color.GRAY
         textAttributes.fontType= Font.ITALIC
 
-        //在指定位置插入提示
-
+        // 在指定位置插入提示
         currentInlay=inlayModel.addInlineElement(offset, true, object:EditorCustomElementRenderer{
             override fun paint(
                 inlay: Inlay<*>,
@@ -66,7 +65,7 @@ class MyEditorHelper(private val project: Project) {
         })
     }
     
-    //添加tab监听
+    // 添加tab监听
     fun addEditorKeyListener(editor: Editor, offset:Int, suggestion: String){
         print("监听就绪！")
         editor.contentComponent.addKeyListener(

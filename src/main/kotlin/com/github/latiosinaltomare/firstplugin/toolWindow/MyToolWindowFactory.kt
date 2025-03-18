@@ -1,6 +1,7 @@
 package com.github.latiosinaltomare.firstplugin.toolWindow
 
-import com.github.latiosinaltomare.firstplugin.widget.MyPluginSettings
+import com.github.latiosinaltomare.firstplugin.settings.MyPluginSettings
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
@@ -26,7 +27,6 @@ import org.json.JSONObject
 import javax.swing.SwingUtilities
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.ProjectManager
-
 import com.vladsch.flexmark.util.data.MutableDataSet
 import com.vladsch.flexmark.ext.tables.TablesExtension
 import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension
@@ -66,12 +66,11 @@ class MyToolWindowFactory : ToolWindowFactory {
         private var isGenerating = false  // 状态变量，是否正在生成回复
         private var currentProcess: Process? = null  // 用于保存生成回复的进程
         private var currentEditorMessagePanel: JEditorPane = JEditorPane() //保存当前对话框，用于流式输出
-        //需要存储用户当前选择的模型
+        // 需要存储用户当前选择的模型
         private var currentModel: String?="DeepSeek-R1 Standard"
-//        private var latch: CountDownLatch ?= null
         private var generateCall: Call? = null
 
-        //需要存储对话记录
+        // 需要存储对话记录
         val chatHistory=JSONArray()
         private var fullResponse = ""
 
@@ -112,13 +111,13 @@ class MyToolWindowFactory : ToolWindowFactory {
             inputPanel.add(inputFieldPanel, BorderLayout.CENTER)
             inputPanel.add(sendButton, BorderLayout.EAST)
 
-// **新的清空按钮和下拉框区域**
+            // **新的清空按钮和下拉框区域**
             val clearPanel = JBPanel<JBPanel<*>>(BorderLayout()).apply {
                 border = EmptyBorder(5, 10, 10, 10) // 让它贴近底部
                 preferredSize = Dimension(250, 50) // 设置整个面板的大小
             }
 
-// **创建下拉框**
+            // **创建下拉框**
             val optionsComboBox = JComboBox<String>().apply {
                 addItem("DeepSeek-R1 Standard")
                 addItem("DeepSeek-R1 70B")
@@ -132,7 +131,7 @@ class MyToolWindowFactory : ToolWindowFactory {
                 }
             }
 
-// **清空按钮**
+            // **清空按钮**
             val clearButton = JButton("Start New Chat").apply {
                 font = Font("Dialog", Font.BOLD, 14)
                 foreground = Color.WHITE
@@ -140,15 +139,30 @@ class MyToolWindowFactory : ToolWindowFactory {
                 preferredSize = Dimension(120, 40) // 设置按钮大小
             }
 
-// **创建水平面板，将下拉框和按钮放入**
-            val clearPanelContent = JBPanel<JBPanel<*>>(GridLayout(1, 2)).apply {
-                add(optionsComboBox) // 左侧：下拉框
-                add(clearButton) // 右侧：清空按钮
+            // **设置按钮**
+            val settingsButton = JButton().apply {
+                icon = AllIcons.General.Settings
+                toolTipText = "Settings"
+                isFocusPainted = false
+                preferredSize = Dimension(40, 40)
+                background = Color(60, 63, 65)
+                addActionListener { openSettingsDialog() }
+            }
+
+            // **创建水平面板，将下拉框和按钮放入**
+            val gridPanel = JBPanel<JBPanel<*>>(GridLayout(1, 2)).apply {
+                add(optionsComboBox)  // 左侧：下拉框
+                add(clearButton)      // 中间：清空按钮
+            }
+
+            val clearPanelContent = JBPanel<JBPanel<*>>(BorderLayout()).apply {
+                add(gridPanel, BorderLayout.CENTER)
+                add(settingsButton, BorderLayout.EAST)  // 右侧：设置按钮
             }
 
             clearPanel.add(clearPanelContent, BorderLayout.CENTER) // 将内容添加到 clearPanel 中
 
-// **将输入框放在底部上方，Clear 按钮和下拉框放在最底部**
+            // **将输入框放在底部上方，Clear 按钮和下拉框放在最底部**
             val bottomPanel = JBPanel<JBPanel<*>>(BorderLayout()).apply {
                 layout = BoxLayout(this, BoxLayout.Y_AXIS)
                 add(inputPanel)
@@ -177,6 +191,58 @@ class MyToolWindowFactory : ToolWindowFactory {
                     }
                 }
             })
+        }
+
+        private fun openSettingsDialog() {
+            // 创建 JTextArea 并设置自动换行
+            val textArea = JTextArea(10, 30).apply {
+                lineWrap = true
+                wrapStyleWord = true
+                border = BorderFactory.createEmptyBorder()
+                background = Color.DARK_GRAY
+                foreground = Color.WHITE
+            }
+
+            // 去掉横向滚动条，仅保留纵向滚动条
+            val scrollPane = JScrollPane(textArea).apply {
+                horizontalScrollBarPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+                border = BorderFactory.createEmptyBorder()
+                background = Color.DARK_GRAY
+            }
+
+            // 创建一个 JLabel 用于显示额外的提示信息
+            val label = JLabel("Please input your key").apply {
+                foreground = Color.WHITE
+            }
+
+            // 创建一个 JPanel 并将 JLabel 和 JScrollPane 添加到其中
+            val panel = JPanel(BorderLayout()).apply {
+                background = Color.DARK_GRAY
+                add(label, BorderLayout.NORTH)
+                add(scrollPane, BorderLayout.CENTER)
+            }
+
+            // 使用 JOptionPane 显示对话框，带有确认和取消按钮
+            val option = JOptionPane.showConfirmDialog(
+                null,
+                panel,
+                "Input Key",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+            )
+
+            if (option == JOptionPane.OK_OPTION) {
+                val userInput = textArea.text
+                if (userInput.isNotBlank()) {
+                    // 获取存储服务并保存用户输入
+                    val settings = MyPluginSettings.getInstance()
+                    settings.myState.userInput = userInput // 存储用户输入
+
+                    JOptionPane.showMessageDialog(null, "Key has been saved", "Success", JOptionPane.INFORMATION_MESSAGE)
+                } else {
+                    JOptionPane.showMessageDialog(null, "Input can't be null", "Error", JOptionPane.ERROR_MESSAGE)
+                }
+            }
         }
 
         private fun sendMessage(chatPanel: JPanel, scrollPane: JBScrollPane, inputField: JBTextField, sendButton: JButton) {

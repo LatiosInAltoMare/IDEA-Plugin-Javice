@@ -26,10 +26,10 @@ class MyCustomInspection : ToolWindowFactory {
     private var complianceCheckButton: JLabel? = null
     private var reanalyzeButton: JLabel? = null
 
-    private var statusLabel: JLabel? = null //用于显示当前是否正在生成回答
+    private var statusLabel: JLabel? = null // 用于显示当前是否正在生成回答
     private var currentProcess: Process? = null  // 用于保存生成回复的进程
-    private var generatingBugDetection=false//用于记录是否在生成BugDetection的内容
-    private var generatingComplianceCheck=false//用于记录是否在生成Compliance Check的内容
+    private var generatingBugDetection=false // 用于记录是否在生成BugDetection的内容
+    private var generatingComplianceCheck=false // 用于记录是否在生成Compliance Check的内容
 
     private var cardLayout: CardLayout? = null
     private var cardPanel: JPanel? = null
@@ -317,12 +317,12 @@ class MyCustomInspection : ToolWindowFactory {
               "Bug2": {…}  // For additional bugs
             }
         """.trimIndent()
-        //调用Llama3模型
+        // 调用Llama3模型
         return getLlama3Response(prompt)
     }
 
     private fun complianceInspection(project: Project): Pair<Array<String>, Array<String>> {
-        //提取编辑器中的内容
+        // 提取编辑器中的内容
         val currentCode=getCurrentFileContent(project)
         print(currentCode)
         val prompt="""
@@ -392,7 +392,7 @@ class MyCustomInspection : ToolWindowFactory {
         return ansiPattern.matcher(text).replaceAll("")
     }
 
-    //方法：移除ANSI 控制字符
+    // 方法：移除ANSI 控制字符
     fun removeAnsiCodes_1(text: String): String {
         // 使用正则表达式移除 ANSI 控制字符
         val ansiPattern = Pattern.compile("\\u001B\\[[0-9;]*[a-zA-Z]")
