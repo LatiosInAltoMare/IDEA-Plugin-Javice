@@ -19,10 +19,6 @@
 
 - 下载地址：https://github.com/LatiosInAltoMare/IDEA-Plugin-Javice/releases/download/v1.0.0/Javice-1.0.jar
 
-- 进入页面后点击下载按钮
-
-<img src="./pictures/download.png" alt="download" style="zoom:50%;" />
-
 **步骤二：安装`jar`包**
 
 - 首先进入设置/插件界面
