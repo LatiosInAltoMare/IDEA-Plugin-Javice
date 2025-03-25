@@ -66,7 +66,6 @@ class MySimpleStatusBarWidget(private val project: Project) : StatusBarWidget, S
             textArea.lineWrap = true
             textArea.wrapStyleWord = true
             textArea.border = BorderFactory.createEmptyBorder()
-            textArea.background= Color.DARK_GRAY
 
             // 去掉横向滚动条，仅保留纵向滚动条
             val scrollPane = JScrollPane(textArea)

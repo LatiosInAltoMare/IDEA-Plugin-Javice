@@ -1,6 +1,7 @@
 package com.github.latiosinaltomare.firstplugin.toolWindow
 
 import com.github.latiosinaltomare.firstplugin.widget.MyPluginSettings
+import com.intellij.ide.ui.LafManager
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
@@ -71,6 +72,9 @@ class MyToolWindowFactory : ToolWindowFactory {
 //        private var latch: CountDownLatch ?= null
         private var generateCall: Call? = null
 
+        private var theme=getCurrentThemeName()
+        private var inputTextArea=Color.WHITE
+
         //需要存储对话记录
         val chatHistory=JSONArray()
         private var fullResponse = ""
@@ -105,7 +109,7 @@ class MyToolWindowFactory : ToolWindowFactory {
 
             val sendButton = JButton("Send").apply {
                 font = Font("Dialog", Font.BOLD, 14)
-                foreground = Color.WHITE
+//                foreground = Color.WHITE
                 isFocusPainted = false
             }
 
@@ -135,7 +139,7 @@ class MyToolWindowFactory : ToolWindowFactory {
 // **清空按钮**
             val clearButton = JButton("Start New Chat").apply {
                 font = Font("Dialog", Font.BOLD, 14)
-                foreground = Color.WHITE
+//                foreground = Color.WHITE
                 isFocusPainted = false
                 preferredSize = Dimension(120, 40) // 设置按钮大小
             }
@@ -289,7 +293,18 @@ $userMessage
 
             val htmlMessage = convertMarkdownToHtml(markdown)
 
-            val messagePanel = RoundedPanel(if(isUser) Color(69,73,74) else Color(60, 63, 65), 30, 30).apply {
+            var userPanelColor: Color?
+            var assistantPanelColor: Color?
+
+            if(theme=="Darcula" || theme =="Dark" || theme=="High Contrast"){
+                userPanelColor=Color(69,73,74)
+                assistantPanelColor=Color(60, 63, 65)
+            }else{
+                userPanelColor=Color(220,220,220)
+                assistantPanelColor=Color(215, 215, 215)
+            }
+
+            val messagePanel = RoundedPanel(if(isUser) userPanelColor else assistantPanelColor, 30, 30).apply {
                 layout = BorderLayout()
 
                 // 使用 JEditorPane 显示消息文本
@@ -490,7 +505,7 @@ $userMessage
         fun createRoundedTextField(): Pair<JPanel, JBTextField> {
             val inputField = JBTextField().apply {
                 font = Font("Dialog", Font.PLAIN, 14)
-                background = Color(69,73,74) // 设置较浅的灰色
+//                background = Color(69,73,74) // 设置较浅的灰色
                 isOpaque = false // 让背景透明，与 RoundedPanel 颜色融合
                 border = EmptyBorder(5, 5, 5, 5)
                 preferredSize = Dimension(180, 30) // 适当调整大小
@@ -501,7 +516,13 @@ $userMessage
                 add(inputField, BorderLayout.CENTER)
             }
 
-            val roundedPanel = RoundedPanel(Color(69, 73, 74), 20, 20).apply {
+            if(theme=="Darcula" || theme =="Dark" || theme=="High Contrast"){
+                inputTextArea=Color(69, 73, 74)
+            }else{
+                inputTextArea=Color(200, 200, 200)
+            }
+
+            val roundedPanel = RoundedPanel(inputTextArea, 20, 20).apply {
                 preferredSize = Dimension(200, 40) // 设定适当大小
                 layout = BorderLayout()
                 add(containerPanel, BorderLayout.CENTER)
@@ -527,6 +548,12 @@ $userMessage
                 // 确保其他组件的绘制不受影响
                 super.paintComponent(g)
             }
+        }
+
+        fun getCurrentThemeName(): String {
+            val lafManager = LafManager.getInstance() ?: return "Unknown Theme"
+            val uiTheme = lafManager.currentUIThemeLookAndFeel
+            return uiTheme?.name ?: "Unknown Theme"
         }
     }
 }
