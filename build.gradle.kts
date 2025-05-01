@@ -124,7 +124,7 @@ kover {
 }
 
 dependencies {
-    implementation("com.vladsch.flexmark:flexmark-all:0.64.0")
+    implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
 }
 
 dependencies {
