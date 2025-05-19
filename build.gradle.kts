@@ -128,7 +128,7 @@ dependencies {
 }
 
 dependencies {
-    implementation("org.json:json:20210307")
+    implementation("org.json:json:20250517")
 }
 
 dependencies {
